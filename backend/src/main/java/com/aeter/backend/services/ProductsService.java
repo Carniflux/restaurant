@@ -1,6 +1,5 @@
 package com.aeter.backend.services;
 
-import com.aeter.backend.Dto.OrderDto;
 import com.aeter.backend.Dto.ProductsDto;
 import com.aeter.backend.entity.Order;
 import com.aeter.backend.entity.Products;
@@ -33,7 +32,7 @@ public class ProductsService {
     }
 
     public List<ProductsDto> getAllProducts(){
-        return ((List<Products>) productsRepo.findAll())
+        return productsRepo.findAll()
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

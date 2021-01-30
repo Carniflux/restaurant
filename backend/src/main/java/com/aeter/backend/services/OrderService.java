@@ -26,7 +26,7 @@ public class OrderService {
     }
 
     public List<OrderDto> getAllOrder(){
-        return ((List<Order>) orderRepo.findAll())
+        return orderRepo.findAll()
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

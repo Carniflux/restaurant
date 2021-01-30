@@ -14,14 +14,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
-
-
 
 
 @SpringComponent
@@ -30,22 +27,22 @@ public class EditOrder extends VerticalLayout implements KeyNotifier {
 
     private final RestTemplate restTemplate;
 
-    private final String orderUri = "http://localhost:8080/order/addOrder/";
+    private final static String ORDER_URI = "http://localhost:8080/order/addOrder/";
 
-    private TextField name = new TextField("Name");
-    private IntegerField quantity = new IntegerField("Quantity");
-
-    private Button save = new Button("Save", VaadinIcon.CHECK.create());
-    private Button cancel = new Button("Cancel");
-
-    private HorizontalLayout actions = new HorizontalLayout(save, cancel);
+    private final TextField name = new TextField("Name");
+    private final IntegerField quantity = new IntegerField("Quantity");
 
     Binder<OrderDto> binder = new Binder<>(OrderDto.class);
-    private OrderDto orderDto = new OrderDto();
+    private final OrderDto orderDto = new OrderDto();
 
     @Autowired
     public EditOrder(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+
+        Button save = new Button("Save", VaadinIcon.CHECK.create());
+        Button cancel = new Button("Cancel");
+
+        HorizontalLayout actions = new HorizontalLayout(save, cancel);
 
         add(name, quantity, actions);
 
@@ -66,15 +63,17 @@ public class EditOrder extends VerticalLayout implements KeyNotifier {
     private void save() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
         HttpEntity<OrderDto> httpEntity = new HttpEntity(orderDto, httpHeaders);
 
-        restTemplate.postForEntity(orderUri, httpEntity, Void.class);
+        restTemplate.postForEntity(ORDER_URI, httpEntity, Void.class);
+
         Notification.show(orderDto.getName() + " " + "added to order list");
 
+        name.clear();
+        quantity.clear();
     }
 
-    public void editOrder(OrderDto newOrder) {
+    public void editOrder() {
         binder.setBean(orderDto);
         setVisible(true);
         name.focus();
