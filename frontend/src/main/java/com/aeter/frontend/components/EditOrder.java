@@ -6,7 +6,6 @@ import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
@@ -30,6 +29,7 @@ public class EditOrder extends VerticalLayout implements KeyNotifier {
     private final static String ORDER_URI = "http://localhost:8080/order/addOrder/";
 
     private final TextField name = new TextField("Name");
+    private final TextField measure = new TextField("Measure");
     private final IntegerField quantity = new IntegerField("Quantity");
 
     Binder<OrderDto> binder = new Binder<>(OrderDto.class);
@@ -44,7 +44,9 @@ public class EditOrder extends VerticalLayout implements KeyNotifier {
 
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
 
-        add(name, quantity, actions);
+        quantity.setMinWidth("192px");
+
+        add(name, quantity, measure, actions);
 
         binder.bindInstanceFields(this);
 
@@ -63,14 +65,14 @@ public class EditOrder extends VerticalLayout implements KeyNotifier {
     private void save() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<OrderDto> httpEntity = new HttpEntity(orderDto, httpHeaders);
+
+        HttpEntity<OrderDto> httpEntity = new HttpEntity<>(orderDto, httpHeaders);
 
         restTemplate.postForEntity(ORDER_URI, httpEntity, Void.class);
 
-        Notification.show(orderDto.getName() + " " + "added to order list");
-
         name.clear();
         quantity.clear();
+        measure.clear();
     }
 
     public void editOrder() {
@@ -78,5 +80,4 @@ public class EditOrder extends VerticalLayout implements KeyNotifier {
         setVisible(true);
         name.focus();
     }
-
 }

@@ -8,4 +8,6 @@ public class ProductsDto {
     private String name;
 
     private Integer quantity;
+
+    private String measure;
 }

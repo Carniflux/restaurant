@@ -1,7 +1,10 @@
 package com.aeter.frontend.Pages;
 
 import com.aeter.frontend.Dto.ProductsDto;
+import com.aeter.frontend.components.DeliverPartOfProducts;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -25,18 +28,32 @@ public class Storage extends VerticalLayout {
 
     private final RestTemplate restTemplate;
 
-
-    public Storage() {
+    public Storage(DeliverPartOfProducts deliverPartOfProducts) {
         this.restTemplate = new RestTemplate();
+
+        Dialog dialog = new Dialog();
+        Text textForDialog = new Text("Move food to the kitchen?");
+        Button confirmButton = new Button("Confirm", event -> {
+            movingToTheKitchen();
+            dialog.close();
+        });
+        Button cancelButton = new Button("Cancel", e -> dialog.close());
+        HorizontalLayout dialogActions = new HorizontalLayout(confirmButton, cancelButton);
+        dialog.add(textForDialog, dialogActions);
 
         Button buttonForArrived = new Button("Order arrived");
         Button buttonForDelivering = new Button("Deliver to the kitchen");
-        HorizontalLayout actions = new HorizontalLayout(buttonForArrived, buttonForDelivering);
+        Button buttonForPartDelivering = new Button("Deliver part of product");
+        HorizontalLayout actions = new HorizontalLayout(buttonForArrived, buttonForDelivering, buttonForPartDelivering);
 
-        add(new RouterLink("Create order", CreateOrder.class), actions, grid );
+        grid.removeColumnByKey("measure");
+        grid.addColumn("measure");
 
-        buttonForDelivering.addClickListener(e -> movingToTheKitchen());
+        add(new RouterLink("Create order", CreateOrder.class), actions, grid, deliverPartOfProducts);
+
+        buttonForDelivering.addClickListener(e -> dialog.open());
         buttonForArrived.addClickListener(e -> addProductsToStorage());
+        buttonForPartDelivering.addClickListener(e -> deliverPartOfProducts.deliverPartOfProducts());
 
         listProducts();
     }

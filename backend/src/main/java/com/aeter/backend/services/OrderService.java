@@ -17,14 +17,16 @@ public class OrderService {
     private final OrderRepo orderRepo;
 
     @Transactional
-    public void insertOrder(final OrderDto order){
+    public void insertOrder(final OrderDto orderDto){
         final Order createOrder = Order.builder()
-                .name(order.getName())
-                .quantity(order.getQuantity())
+                .name(orderDto.getName())
+                .quantity(orderDto.getQuantity())
+                .measure(orderDto.getMeasure())
                 .build();
       orderRepo.save(createOrder);
     }
 
+    @Transactional
     public List<OrderDto> getAllOrder(){
         return orderRepo.findAll()
                 .stream()
@@ -36,6 +38,7 @@ public class OrderService {
         OrderDto orderDto = new OrderDto();
         orderDto.setName(order.getName());
         orderDto.setQuantity(order.getQuantity());
+        orderDto.setMeasure(order.getMeasure());
         return orderDto;
     }
 }

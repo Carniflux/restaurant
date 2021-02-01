@@ -18,4 +18,5 @@ public class Products {
 
     private Integer quantity;
 
+    private String measure;
 }

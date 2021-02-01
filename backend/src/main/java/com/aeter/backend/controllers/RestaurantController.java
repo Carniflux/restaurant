@@ -48,9 +48,23 @@ public class RestaurantController {
         return productsService.getAllProducts();
     }
 
+    @PostMapping(value = "updateQuantityOfProduct")
+    @ApiOperation(value = "Update quantity of product")
+    public void updateQuantity(@RequestBody ProductsDto productsDto){
+        System.out.println(productsDto.getName());
+        System.out.println(productsDto.getQuantity());
+        productsService.updateProductsQuantity(productsDto.getName(), productsDto.getQuantity());
+    }
+
     @DeleteMapping(value = "deleteAllDataFromProducts")
     @ApiOperation(value = "Moving to kitchen")
     public void deleteAllData(){
         productsService.deleteAll();
+    }
+
+    @DeleteMapping(value = "deleteByName")
+    @ApiOperation(value = "Delete by name")
+    public void deleteByName(@RequestBody ProductsDto productsDto){
+        productsService.deleteByName(productsDto.getName());
     }
 }

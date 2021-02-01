@@ -26,11 +26,13 @@ public class ProductsService {
             Products p = new Products();
             p.setQuantity(o.getQuantity());
             p.setName(o.getName());
+            p.setMeasure(o.getMeasure());
             productsRepo.save(p);
         }
         orderRepo.deleteAll();
     }
 
+    @Transactional
     public List<ProductsDto> getAllProducts(){
         return productsRepo.findAll()
                 .stream()
@@ -42,10 +44,22 @@ public class ProductsService {
         ProductsDto productsDto = new ProductsDto();
         productsDto.setName(products.getName());
         productsDto.setQuantity(products.getQuantity());
+        productsDto.setMeasure(products.getMeasure());
         return productsDto;
     }
 
+    @Transactional
+    public void updateProductsQuantity(String name, Integer updateQuantity){
+        productsRepo.update(updateQuantity ,name);
+    }
+
+    @Transactional
     public void deleteAll() {
         productsRepo.deleteAll();
+    }
+
+    @Transactional
+    public void deleteByName(String name){
+        productsRepo.deleteByName(name);
     }
 }

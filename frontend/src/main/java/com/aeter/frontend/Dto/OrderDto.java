@@ -8,4 +8,6 @@ public class OrderDto {
     private String name;
 
     private Integer quantity;
+
+    private String measure;
 }

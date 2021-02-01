@@ -28,6 +28,9 @@ public class CreateOrder extends VerticalLayout {
 
         Button newButton = new Button("Add order");
 
+        grid.removeColumnByKey("measure");
+        grid.addColumn("measure");
+
         add(new RouterLink("Storage", Storage.class), newButton, grid, edit);
 
         listProductsForOrder();
