@@ -44,6 +44,8 @@ public class DeliverPartOfProducts extends VerticalLayout{
 
         add(name, quantity, actions);
 
+        quantity.setMinWidth("192px");
+
         binder.bindInstanceFields(this);
 
         setSpacing(true);
