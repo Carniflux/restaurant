@@ -51,8 +51,6 @@ public class RestaurantController {
     @PostMapping(value = "updateQuantityOfProduct")
     @ApiOperation(value = "Update quantity of product")
     public void updateQuantity(@RequestBody ProductsDto productsDto){
-        System.out.println(productsDto.getName());
-        System.out.println(productsDto.getQuantity());
         productsService.updateProductsQuantity(productsDto.getName(), productsDto.getQuantity());
     }
 
