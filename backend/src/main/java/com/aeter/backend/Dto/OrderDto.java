@@ -1,13 +1,24 @@
 package com.aeter.backend.Dto;
 
 import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class OrderDto {
 
-    private String name;
+    private final String name;
 
-    private Integer quantity;
+    private final Integer quantity;
 
-    private String measure;
+    private final String measure;
+
+    public OrderDto(final String name,
+                    final Integer quantity,
+                    final String measure) {
+        this.name = name;
+        this.quantity = quantity;
+        this.measure = measure;
+    }
+
+
 }

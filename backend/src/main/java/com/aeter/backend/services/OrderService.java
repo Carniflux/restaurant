@@ -19,7 +19,7 @@ public class OrderService {
     @Transactional
     public void insertOrder(final OrderDto orderDto){
         final Order createOrder = Order.builder()
-                .name(orderDto.getName())
+                .name(orderDto.getName().trim())
                 .quantity(orderDto.getQuantity())
                 .measure(orderDto.getMeasure())
                 .build();
@@ -35,10 +35,9 @@ public class OrderService {
     }
 
     public OrderDto convertToDto(final Order order){
-        OrderDto orderDto = new OrderDto();
-        orderDto.setName(order.getName());
-        orderDto.setQuantity(order.getQuantity());
-        orderDto.setMeasure(order.getMeasure());
-        return orderDto;
+        return new OrderDto(
+                order.getName(),
+                order.getQuantity(),
+                order.getMeasure());
     }
 }

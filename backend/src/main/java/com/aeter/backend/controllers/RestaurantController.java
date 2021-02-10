@@ -51,7 +51,7 @@ public class RestaurantController {
     @PostMapping(value = "updateQuantityOfProduct")
     @ApiOperation(value = "Update quantity of product")
     public void updateQuantity(@RequestBody ProductsDto productsDto){
-        productsService.updateProductsQuantity(productsDto.getName(), productsDto.getQuantity());
+        productsService.updateProductsQuantity(productsDto.getName().trim(), productsDto.getQuantity());
     }
 
     @DeleteMapping(value = "deleteAllDataFromProducts")
@@ -63,6 +63,6 @@ public class RestaurantController {
     @DeleteMapping(value = "deleteByName")
     @ApiOperation(value = "Delete by name")
     public void deleteByName(@RequestBody ProductsDto productsDto){
-        productsService.deleteByName(productsDto.getName());
+        productsService.deleteByName(productsDto.getName().trim());
     }
 }

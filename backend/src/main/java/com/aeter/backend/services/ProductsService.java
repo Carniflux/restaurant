@@ -41,11 +41,10 @@ public class ProductsService {
     }
 
     public ProductsDto convertToDto(final Products products) {
-        ProductsDto productsDto = new ProductsDto();
-        productsDto.setName(products.getName());
-        productsDto.setQuantity(products.getQuantity());
-        productsDto.setMeasure(products.getMeasure());
-        return productsDto;
+        return new ProductsDto(
+                products.getName(),
+                products.getQuantity(),
+                products.getMeasure());
     }
 
     @Transactional
