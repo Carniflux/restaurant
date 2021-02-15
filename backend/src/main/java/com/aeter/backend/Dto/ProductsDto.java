@@ -11,7 +11,9 @@ public class ProductsDto {
 
     private final String measure;
 
-    public ProductsDto(final String name,final Integer quantity,final String measure) {
+    public ProductsDto(final String name,
+                       final Integer quantity,
+                       final String measure) {
         this.name = name;
         this.quantity = quantity;
         this.measure = measure;

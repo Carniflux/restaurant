@@ -72,7 +72,7 @@ public class Storage extends VerticalLayout {
         listProducts();
     }
 
-    private void movingToTheKitchen(){
+    private void movingToTheKitchen() {
         restTemplate.exchange(DELETE_PRODUCTS_URI, HttpMethod.DELETE, null, Void.class);
         listProducts();
     }

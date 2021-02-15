@@ -26,43 +26,43 @@ public class RestaurantController {
     @PostMapping(value = "addOrder")
     @ApiOperation(value = "Insert products for order", tags = "order")
     @ApiResponses(value ={@ApiResponse(code = 201, message = "OK", response = Order.class)})
-    public void addOrder(@RequestBody OrderDto orderDto){
+    public void addOrder(@RequestBody OrderDto orderDto) {
         orderService.insertOrder(orderDto);
     }
 
     @GetMapping(value = "getAllFromOrder")
     @ApiOperation(value = "Searching all products in order")
-    public List<OrderDto> getAllFromOrder(){
+    public List<OrderDto> getAllFromOrder() {
         return orderService.getAllOrder();
     }
 
     @PostMapping(value = "addProducts")
     @ApiOperation(value = "Add products")
-    public void addProducts(){
+    public void addProducts() {
         productsService.movingToProducts();
     }
 
     @GetMapping(value = "getAllFromProducts")
     @ApiOperation(value = "Get all data from products")
-    public List<ProductsDto> getAllFromProducts(){
+    public List<ProductsDto> getAllFromProducts() {
         return productsService.getAllProducts();
     }
 
     @PostMapping(value = "updateQuantityOfProduct")
     @ApiOperation(value = "Update quantity of product")
-    public void updateQuantity(@RequestBody ProductsDto productsDto){
+    public void updateQuantity(@RequestBody ProductsDto productsDto) {
         productsService.updateProductsQuantity(productsDto.getName().trim(), productsDto.getQuantity());
     }
 
     @DeleteMapping(value = "deleteAllDataFromProducts")
     @ApiOperation(value = "Moving to kitchen")
-    public void deleteAllData(){
+    public void deleteAllData() {
         productsService.deleteAll();
     }
 
     @DeleteMapping(value = "deleteByName")
     @ApiOperation(value = "Delete by name")
-    public void deleteByName(@RequestBody ProductsDto productsDto){
+    public void deleteByName(@RequestBody ProductsDto productsDto) {
         productsService.deleteByName(productsDto.getName().trim());
     }
 }

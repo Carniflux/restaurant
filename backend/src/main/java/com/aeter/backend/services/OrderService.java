@@ -17,7 +17,7 @@ public class OrderService {
     private final OrderRepo orderRepo;
 
     @Transactional
-    public void insertOrder(final OrderDto orderDto){
+    public void insertOrder(final OrderDto orderDto) {
         final Order createOrder = Order.builder()
                 .name(orderDto.getName().trim())
                 .quantity(orderDto.getQuantity())
@@ -27,14 +27,14 @@ public class OrderService {
     }
 
     @Transactional
-    public List<OrderDto> getAllOrder(){
+    public List<OrderDto> getAllOrder() {
         return orderRepo.findAll()
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    public OrderDto convertToDto(final Order order){
+    private OrderDto convertToDto(final Order order) {
         return new OrderDto(
                 order.getName(),
                 order.getQuantity(),

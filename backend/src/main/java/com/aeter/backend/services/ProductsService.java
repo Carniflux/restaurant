@@ -20,7 +20,7 @@ public class ProductsService {
     private final ProductsRepo productsRepo;
 
     @Transactional
-    public void movingToProducts(){
+    public void movingToProducts() {
         List<Order> listOder = orderRepo.findAll();
         for(Order o : listOder){
             Products p = new Products();
@@ -33,14 +33,14 @@ public class ProductsService {
     }
 
     @Transactional
-    public List<ProductsDto> getAllProducts(){
+    public List<ProductsDto> getAllProducts() {
         return productsRepo.findAll()
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    public ProductsDto convertToDto(final Products products) {
+    private ProductsDto convertToDto(final Products products) {
         return new ProductsDto(
                 products.getName(),
                 products.getQuantity(),
@@ -48,7 +48,7 @@ public class ProductsService {
     }
 
     @Transactional
-    public void updateProductsQuantity(String name, Integer updateQuantity){
+    public void updateProductsQuantity(String name, Integer updateQuantity) {
         productsRepo.update(updateQuantity ,name);
     }
 
@@ -58,7 +58,7 @@ public class ProductsService {
     }
 
     @Transactional
-    public void deleteByName(String name){
+    public void deleteByName(String name) {
         productsRepo.deleteByName(name);
     }
 }
